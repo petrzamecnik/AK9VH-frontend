@@ -1,25 +1,25 @@
 <script lang="ts">
     import "../../app.css";
 
-    let email = "";
+    let username = "";
     let password = "";
 
-    let emailError = "";
+    let usernameError = "";
     let passwordError = "";
     let loginServerError = "";
     let isLoginSuccess = false;
     let loginSuccessMessage = "Login successful! Redirecting...";
 
     async function handleLogin() {
-        console.log("Email:", email);
+        console.log("Username:", username);
         console.log("Password:", password);
 
-        emailError = passwordError = "";
+        usernameError = passwordError = "";
         loginServerError = "";
         isLoginSuccess = false;
 
-        if (!email) {
-            emailError = "Email is required";
+        if (!username) {
+            usernameError = "Username is required";
         }
 
         if (!password) {
@@ -27,10 +27,10 @@
         }
 
         // return if validation fails
-        if (emailError || passwordError) return;
+        if (usernameError || passwordError) return;
 
         const loginData = {
-            email,
+            username,
             password
         };
 
@@ -78,12 +78,12 @@
 
     <!-- login fields -->
     <div class="flex flex-col w-96">
-        <label class="text-lg font-medium text-white mb-1" for="email">Email Address</label>
-        <input id="email"
-               type="email"
-               placeholder="Enter your email"
-               bind:value={email}
-               class="mb-4 p-2 rounded-md focus:outline-none focus:ring w-full text-gray-600 placeholder-gray-400 {emailError ? 'border-red-500 border-2' : ''}">
+        <label class="text-lg font-medium text-white mb-1" for="username">Username</label>
+        <input id="username"
+               type="text"
+               placeholder="Enter your username"
+               bind:value={username}
+               class="mb-4 p-2 rounded-md focus:outline-none focus:ring w-full text-gray-600 placeholder-gray-400 {usernameError ? 'border-red-500 border-2' : ''}">
 
         <label class="text-lg font-medium text-white mb-1" for="password">Password</label>
         <input id="password"
