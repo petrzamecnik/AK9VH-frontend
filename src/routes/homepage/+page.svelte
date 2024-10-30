@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { goto } from "$app/navigation";
-    import { authStore } from '../../stores/authStore';
-    import { ROUTES } from '../../config/constants';
+    import {onMount} from 'svelte';
+    import {goto} from "$app/navigation";
+    import {authStore} from '../../stores/authStore';
+    import {ROUTES} from '../../config/constants';
+    import {User, PackageOpen, Library, Settings, Gamepad2} from 'lucide-svelte';
 
 
     $: user = $authStore.user;
     $: isAuthenticated = $authStore.isAuthenticated;
-
 
 
     onMount(() => {
@@ -15,7 +15,7 @@
         authStore.initialize();
 
         // Check authentication
-        if (!$authStore.isAuthenticated) {
+        if (!isAuthenticated) {
             goto(ROUTES.LOGIN);
         }
     });
@@ -32,12 +32,12 @@
 
             if (response.ok) {
                 authStore.logout();
-                goto(ROUTES.LOGIN);
+                await goto(ROUTES.LOGIN);
             }
         } catch (error) {
             console.error("Logout error:", error);
             authStore.logout();
-            goto(ROUTES.LOGIN);
+            await goto(ROUTES.LOGIN);
         }
     }
 
@@ -49,6 +49,30 @@
     <nav class="bg-gray-900 fixed top-0 left-0 right-0 p-4 shadow-lg">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold text-white">Dashboard</h1>
+
+            <!-- Navigation Items -->
+            <div class="flex items-center gap-10">
+                <a href={ROUTES.HOMEPAGE}
+                   class="flex flex-col items-center text-gray-400 hover:text-white transition-colors duration-200">
+                    <User size="24"/>
+                    <span class="text-xs mt-1">Profile</span>
+                </a>
+                <a href={ROUTES.STORE}
+                   class="flex flex-col items-center text-gray-400 hover:text-white transition-colors duration-200">
+                    <PackageOpen size="24"/>
+                    <span class="text-xs mt-1">Store</span>
+                </a>
+                <a href={ROUTES.LIBRARY}
+                   class="flex flex-col items-center text-gray-400 hover:text-white transition-colors duration-200">
+                    <Gamepad2 size="24"/>
+                    <span class="text-xs mt-1">Library</span>
+                </a>
+                <a href={ROUTES.SETTINGS}
+                   class="flex flex-col items-center text-gray-400 hover:text-white transition-colors duration-200">
+                    <Settings size="24"/>
+                    <span class="text-xs mt-1">Settings</span>
+                </a>
+            </div>
 
 
             {#if user}

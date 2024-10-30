@@ -4,7 +4,11 @@ export const ROUTES = {
     HOME: '/',
     LOGIN: '/login',
     REGISTER: '/register',
-    HOMEPAGE: '/homepage'
+    HOMEPAGE: '/homepage',
+    STORE: '/store',
+    LIBRARY: '/library',
+    SETTINGS: '/settings'
+
 } as const;
 
 export const API_ENDPOINTS = {
