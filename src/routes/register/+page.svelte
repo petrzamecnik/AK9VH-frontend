@@ -1,8 +1,8 @@
 <script lang="ts">
     import "../../app.css";
-    import { goto } from "$app/navigation";
-    import { fetchApi } from '$lib/utils/api';
-    import { ROUTES } from '../../config/constants';
+    import {goto} from "$app/navigation";
+    import {fetchApi} from '$lib/utils/api';
+    import {API_ENDPOINTS, ROUTES} from '../../config/constants';
 
     let username = "";
     let email = "";
@@ -35,9 +35,9 @@
 
         // Attempt registration
         try {
-            const response = await fetchApi('/api/users/register', {
+            const response = await fetchApi(API_ENDPOINTS.REGISTER, {
                 method: 'POST',
-                body: JSON.stringify({ username, email, password })
+                body: JSON.stringify({username, email, password})
             });
 
             if (response.ok) {

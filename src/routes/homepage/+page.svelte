@@ -40,6 +40,8 @@
             goto(ROUTES.LOGIN);
         }
     }
+
+
 </script>
 
 <main class="min-h-screen bg-gray-800 p-4">
@@ -48,9 +50,10 @@
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold text-white">Dashboard</h1>
 
+
             {#if user}
                 <div class="flex items-center gap-4">
-                    <span class="text-gray-300">Welcome, {user.username}!</span>
+                    <span class="text-gray-300">Welcome, {user?.username}!</span>
                     <button
                             on:click={handleLogout}
                             class="bg-red-600 px-4 py-2 rounded font-bold hover:bg-red-700 transition-all duration-200 text-white">
