@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import {writable} from 'svelte/store';
 
 interface User {
     userId: number;
@@ -14,7 +14,7 @@ interface AuthState {
 }
 
 const createAuthStore = () => {
-    const { subscribe, set, update } = writable<AuthState>({
+    const {subscribe, set, update} = writable<AuthState>({
         user: null,
         token: null,
         isAuthenticated: false
@@ -57,6 +57,12 @@ const createAuthStore = () => {
                     isAuthenticated: true
                 });
             }
+        },
+        updateUser: (updateUser: User) => {
+            update(store => ({
+                ...store,
+                user: updateUser
+            }));
         }
     };
 };
