@@ -3,7 +3,7 @@
     import {goto} from "$app/navigation";
     import {authStore} from '../../stores/authStore';
     import {ROUTES} from '../../config/constants';
-    import {User, PackageOpen, Library, Settings, Gamepad2} from 'lucide-svelte';
+    import {Gamepad2, PackageOpen, Settings, User} from 'lucide-svelte';
 
 
     $: user = $authStore.user;
@@ -52,23 +52,23 @@
 
             <!-- Navigation Items -->
             <div class="flex items-center gap-10">
-                <a href={ROUTES.HOMEPAGE}
-                   class="flex flex-col items-center text-gray-400 hover:text-white transition-colors duration-200">
+                <a class="flex flex-col items-center text-gray-400 hover:text-white transition-colors duration-200"
+                   href={ROUTES.HOMEPAGE}>
                     <User size="24"/>
                     <span class="text-xs mt-1">Profile</span>
                 </a>
-                <a href={ROUTES.STORE}
-                   class="flex flex-col items-center text-gray-400 hover:text-white transition-colors duration-200">
+                <a class="flex flex-col items-center text-gray-400 hover:text-white transition-colors duration-200"
+                   href={ROUTES.STORE}>
                     <PackageOpen size="24"/>
                     <span class="text-xs mt-1">Store</span>
                 </a>
-                <a href={ROUTES.LIBRARY}
-                   class="flex flex-col items-center text-gray-400 hover:text-white transition-colors duration-200">
+                <a class="flex flex-col items-center text-gray-400 hover:text-white transition-colors duration-200"
+                   href={ROUTES.LIBRARY}>
                     <Gamepad2 size="24"/>
                     <span class="text-xs mt-1">Library</span>
                 </a>
-                <a href={ROUTES.SETTINGS}
-                   class="flex flex-col items-center text-gray-400 hover:text-white transition-colors duration-200">
+                <a class="flex flex-col items-center text-gray-400 hover:text-white transition-colors duration-200"
+                   href={ROUTES.SETTINGS}>
                     <Settings size="24"/>
                     <span class="text-xs mt-1">Settings</span>
                 </a>
