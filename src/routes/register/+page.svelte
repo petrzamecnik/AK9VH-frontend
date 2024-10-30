@@ -2,7 +2,7 @@
     import "../../app.css";
     import {goto} from "$app/navigation";
     import {fetchApi} from '$lib/utils/api';
-    import {API_ENDPOINTS, ROUTES} from '../../config/constants';
+    import {API_ENDPOINTS, DELAYS, ROUTES} from '../../config/constants';
     import {ChevronLeft} from "lucide-svelte";
 
     let username = "";
@@ -51,7 +51,7 @@
                 // Redirect after a short delay to show success message
                 setTimeout(() => {
                     goto(ROUTES.LOGIN);
-                }, 2000);
+                }, DELAYS.REGISTER_REDIRECT_DELAY);
             } else {
                 const errorData = await response.json();
                 registerServerError = errorData.message;

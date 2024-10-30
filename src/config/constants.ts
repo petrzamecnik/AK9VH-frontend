@@ -5,9 +5,10 @@ export const ROUTES = {
     LOGIN: '/login',
     REGISTER: '/register',
     HOMEPAGE: '/homepage',
-    STORE: '/store',
-    LIBRARY: '/library',
-    SETTINGS: '/settings'
+    PROFILE: '/homepage/profile',
+    STORE: '/homepage/store',
+    LIBRARY: '/homepage/library',
+    SETTINGS: '/homepage/settings'
 
 } as const;
 
@@ -16,3 +17,8 @@ export const API_ENDPOINTS = {
     REGISTER: '/api/users/register',
     LOGOUT: '/api/users/logout'
 } as const;
+
+export const DELAYS = {
+    LOGIN_DELAY: 500,
+    REGISTER_REDIRECT_DELAY: 1000
+}

@@ -3,8 +3,9 @@
     import {goto} from "$app/navigation";
     import {authStore} from '../../stores/authStore';
     import {fetchApi} from '$lib/utils/api';
-    import {ROUTES} from '../../config/constants';
+    import {DELAYS, ROUTES} from '../../config/constants';
     import {ChevronLeft} from "lucide-svelte";
+
 
     let username = "";
     let password = "";
@@ -66,7 +67,7 @@
                 // Redirect after showing success message
                 setTimeout(() => {
                     goto(ROUTES.HOMEPAGE);
-                }, 1000);
+                }, DELAYS.LOGIN_DELAY);
             } else {
                 const errorData = await response.json();
                 loginServerError = errorData.message || "Login failed. Please try again.";
