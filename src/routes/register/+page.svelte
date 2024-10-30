@@ -1,5 +1,8 @@
 <script lang="ts">
     import "../../app.css";
+    import { goto } from "$app/navigation";
+    import { fetchApi } from '$lib/utils/api';
+    import { ROUTES } from '../../config/constants';
 
     let username = "";
     let email = "";
@@ -10,68 +13,63 @@
     let passwordError = "";
     let registerServerError = "";
     let isRegisterSuccess = false;
-    let registerSuccessMessage = "Registration was successful, you can go back to login!"
+    let registerSuccessMessage = "Registration successful! You can now login.";
 
     async function handleRegister() {
-        console.log("Username:", username);
-        console.log("Email:", email);
-        console.log("Password:", password);
-
+        // Reset errors and success state
         usernameError = emailError = passwordError = "";
-        registerServerError = emailError = "";
+        registerServerError = "";
         isRegisterSuccess = false;
 
+        // Validate inputs
         if (!username) {
             usernameError = "Username is required";
         }
-
         if (!email) {
             emailError = "Email is required";
         }
-
         if (!password) {
             passwordError = "Password is required";
         }
-
-        // return if validation fails
         if (usernameError || emailError || passwordError) return;
 
-        const userData = {
-            username,
-            email,
-            password
-        };
-
-        // post to backend
+        // Attempt registration
         try {
-            const response = await fetch("http://localhost:3000/api/users/register", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(userData)
+            const response = await fetchApi('/api/users/register', {
+                method: 'POST',
+                body: JSON.stringify({ username, email, password })
             });
 
             if (response.ok) {
                 isRegisterSuccess = true;
-                return
+                // Clear form
+                username = "";
+                email = "";
+                password = "";
+
+                // Redirect after a short delay to show success message
+                setTimeout(() => {
+                    goto(ROUTES.LOGIN);
+                }, 2000);
             } else {
                 const errorData = await response.json();
                 registerServerError = errorData.message;
-                console.error("Registration failed:", registerServerError);
             }
-
         } catch (error) {
-            console.error("Error while creating user: ", error);
+            console.error("Registration error:", error);
+            registerServerError = "An error occurred during registration";
         }
     }
 
-    function navigateToPreviousScreen() {
-        window.history.back();
+    function navigateToHome() {
+        goto(ROUTES.HOME);
     }
 </script>
 
 <main class="flex items-center justify-center min-h-screen relative bg-gray-800">
-    <!-- back button -->
-    <button on:click={navigateToPreviousScreen}
+    <!-- Back button -->
+    <button
+            on:click={navigateToHome}
             class="absolute top-4 left-4 bg-blue-700 px-4 py-2 rounded font-bold flex items-center hover:scale-110 text-white">
         <svg class="w-5 h-5 mr-2 fill-current text-white" xmlns="http://www.w3.org/2000/svg">
             <path d="M10 15l-5-5 5-5v10z"/>
@@ -79,36 +77,67 @@
         Back
     </button>
 
-    <!-- register fields -->
+    <!-- Register fields -->
     <div class="flex flex-col w-96">
-        <label class="text-lg font-medium text-white mb-1" for="username">Username</label>
-        <input id="username"
-               type="text"
-               placeholder="Enter your username"
-               bind:value={username}
-               class="mb-4 p-2 rounded-md focus:outline-none focus:ring w-full text-gray-600 placeholder-gray-400 {usernameError ? 'border-red-500 border-2' : ''}">
+        <!-- Username field -->
+        <label
+                class="text-lg font-medium text-white mb-1"
+                for="username">
+            Username
+        </label>
+        <input
+                id="username"
+                type="text"
+                placeholder="Enter your username"
+                bind:value={username}
+                class="mb-4 p-2 rounded-md focus:outline-none focus:ring w-full text-gray-600 placeholder-gray-400 {usernameError ? 'border-red-500 border-2' : ''}"
+        >
+        {#if usernameError}
+            <p class="text-red-500 text-sm mb-2">{usernameError}</p>
+        {/if}
 
-        <label class="text-lg font-medium text-white mb-1" for="email">Email Address</label>
-        <input id="email"
-               type="email"
-               placeholder="Enter your email"
-               bind:value={email}
-               class="mb-4 p-2 rounded-md focus:outline-none focus:ring w-full text-gray-600 placeholder-gray-400 {emailError ? 'border-red-500 border-2' : ''}">
+        <!-- Email field -->
+        <label
+                class="text-lg font-medium text-white mb-1"
+                for="email">
+            Email Address
+        </label>
+        <input
+                id="email"
+                type="email"
+                placeholder="Enter your email"
+                bind:value={email}
+                class="mb-4 p-2 rounded-md focus:outline-none focus:ring w-full text-gray-600 placeholder-gray-400 {emailError ? 'border-red-500 border-2' : ''}"
+        >
+        {#if emailError}
+            <p class="text-red-500 text-sm mb-2">{emailError}</p>
+        {/if}
 
-        <label class="text-lg font-medium text-white mb-1" for="password">Password</label>
-        <input id="password"
-               type="password"
-               placeholder="Enter your password"
-               bind:value={password}
-               class="mb-4 p-2 rounded-md focus:outline-none focus:ring w-full text-gray-600 placeholder-gray-400 {passwordError ? 'border-red-500 border-2' : ''}">
+        <!-- Password field -->
+        <label
+                class="text-lg font-medium text-white mb-1"
+                for="password">
+            Password
+        </label>
+        <input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                bind:value={password}
+                class="mb-4 p-2 rounded-md focus:outline-none focus:ring w-full text-gray-600 placeholder-gray-400 {passwordError ? 'border-red-500 border-2' : ''}"
+        >
+        {#if passwordError}
+            <p class="text-red-500 text-sm mb-2">{passwordError}</p>
+        {/if}
 
-        <!-- register button -->
-        <button on:click={handleRegister}
-                class="bg-blue-700 my-2 py-2 rounded font-bold hover:bg-blue-600 text-white">
+        <!-- Register button -->
+        <button
+                on:click={handleRegister}
+                class="bg-blue-700 my-2 py-2 rounded font-bold hover:bg-blue-600 transition-colors duration-200 text-white">
             Register
         </button>
 
-        <!-- message -->
+        <!-- Status messages -->
         <div class="min-h-[40px]">
             {#if registerServerError}
                 <p class="text-red-500 text-sm break-words">{registerServerError}</p>
@@ -118,15 +147,16 @@
             {/if}
         </div>
 
-        <!-- login link -->
+        <!-- Login link -->
         <div class="text-center mt-2">
             <p class="text-white text-sm">
                 Already have an account?
-                <a href="/login" class="text-blue-400 hover:underline">Login here</a>
+                <a
+                        href={ROUTES.LOGIN}
+                        class="text-blue-400 hover:underline">
+                    Login here
+                </a>
             </p>
         </div>
     </div>
 </main>
-
-<style lang="css">
-</style>
