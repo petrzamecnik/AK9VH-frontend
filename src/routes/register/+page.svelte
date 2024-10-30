@@ -3,6 +3,7 @@
     import {goto} from "$app/navigation";
     import {fetchApi} from '$lib/utils/api';
     import {API_ENDPOINTS, ROUTES} from '../../config/constants';
+    import {ChevronLeft} from "lucide-svelte";
 
     let username = "";
     let email = "";
@@ -69,11 +70,9 @@
 <main class="flex items-center justify-center min-h-screen relative bg-gray-800">
     <!-- Back button -->
     <button
-            on:click={navigateToHome}
-            class="absolute top-4 left-4 bg-blue-700 px-4 py-2 rounded font-bold flex items-center hover:scale-110 text-white">
-        <svg class="w-5 h-5 mr-2 fill-current text-white" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 15l-5-5 5-5v10z"/>
-        </svg>
+            class="absolute top-4 left-4 bg-blue-700 px-4 py-2 rounded font-bold flex items-center hover:scale-110 text-white"
+            on:click={navigateToHome}>
+        <ChevronLeft class="mr-1" size={20} strokeWidth={3}/>
         Back
     </button>
 
@@ -86,11 +85,11 @@
             Username
         </label>
         <input
-                id="username"
-                type="text"
-                placeholder="Enter your username"
                 bind:value={username}
                 class="mb-4 p-2 rounded-md focus:outline-none focus:ring w-full text-gray-600 placeholder-gray-400 {usernameError ? 'border-red-500 border-2' : ''}"
+                id="username"
+                placeholder="Enter your username"
+                type="text"
         >
         {#if usernameError}
             <p class="text-red-500 text-sm mb-2">{usernameError}</p>
@@ -103,11 +102,11 @@
             Email Address
         </label>
         <input
-                id="email"
-                type="email"
-                placeholder="Enter your email"
                 bind:value={email}
                 class="mb-4 p-2 rounded-md focus:outline-none focus:ring w-full text-gray-600 placeholder-gray-400 {emailError ? 'border-red-500 border-2' : ''}"
+                id="email"
+                placeholder="Enter your email"
+                type="email"
         >
         {#if emailError}
             <p class="text-red-500 text-sm mb-2">{emailError}</p>
@@ -120,11 +119,11 @@
             Password
         </label>
         <input
-                id="password"
-                type="password"
-                placeholder="Enter your password"
                 bind:value={password}
                 class="mb-4 p-2 rounded-md focus:outline-none focus:ring w-full text-gray-600 placeholder-gray-400 {passwordError ? 'border-red-500 border-2' : ''}"
+                id="password"
+                placeholder="Enter your password"
+                type="password"
         >
         {#if passwordError}
             <p class="text-red-500 text-sm mb-2">{passwordError}</p>
@@ -132,8 +131,8 @@
 
         <!-- Register button -->
         <button
-                on:click={handleRegister}
-                class="bg-blue-700 my-2 py-2 rounded font-bold hover:bg-blue-600 transition-colors duration-200 text-white">
+                class="bg-blue-700 my-2 py-2 rounded font-bold hover:bg-blue-600 transition-colors duration-200 text-white"
+                on:click={handleRegister}>
             Register
         </button>
 
@@ -152,8 +151,8 @@
             <p class="text-white text-sm">
                 Already have an account?
                 <a
-                        href={ROUTES.LOGIN}
-                        class="text-blue-400 hover:underline">
+                        class="text-blue-400 hover:underline"
+                        href={ROUTES.LOGIN}>
                     Login here
                 </a>
             </p>
